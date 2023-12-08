@@ -49,6 +49,44 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'main_format': {
+            'format': '{asctime} - {levelname} - {module} - {filename} - {message}',
+            'style': "{"
+        }
+    },
+    'handlers': {
+        'debug_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'formatter': 'main_format',
+            'filename': f'{BASE_DIR}/debug.log'
+        },
+        'error_file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'formatter': 'main_format',
+            'filename': f'{BASE_DIR}/error.log'
+        }
+    },
+    'loggers': {
+            'django': {
+                'handlers': ['debug_file'],
+                'level': 'DEBUG',
+                'propagate': True,
+            },
+            'django2': {
+                'handlers': ['error_file'],
+                'level': 'ERROR',
+                'propagate': True,
+            },
+        },
+}
+
+
 ROOT_URLCONF = 'stolen_store.urls'
 
 TEMPLATES = [
